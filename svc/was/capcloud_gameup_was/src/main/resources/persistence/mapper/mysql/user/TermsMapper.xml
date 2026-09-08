@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capcloud.gameup.persistence.mapper.mysql.user.TermsMapper">
+    <resultMap id="resultTbTerms" type="com.capcloud.gameup.api.domain.database.TB_TERMS">
+        <id column="TT_ID" property="termsId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <id column="TT_SEQ" property="termsSeq" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <id column="TT_VERSION" property="termsVersion" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="TT_IS_REQUIRED" property="termsIsRequired" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <id column="TT_TITLE" property="termsTitle" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="TT_CONTENT" property="termsContent" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id column="TT_CREATED_DATE" property="termsCreatedDate" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+<!--    <resultMap id="resultTermsResponseVO" type="com.capcloud.gameup.api.domain.response.terms.TermsResponseVO">-->
+<!--        <id column="TT_ID" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>-->
+<!--        <id column="TT_SEQ" property="seq" javaType="java.lang.Integer" jdbcType="INTEGER"/>-->
+<!--        <id column="TT_IS_REQUIRED" property="isRequired" javaType="java.lang.INTEGER" jdbcType="INTEGER"/>-->
+<!--        <id column="TT_TITLE" property="title" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--        <id column="TT_CONTENT" property="content" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="selectTermsLtsVersion" resultType="String">-->
+<!--    <![CDATA[-->
+<!--        SELECT MAX(TT_VERSION) AS VERSION-->
+<!--        FROM TB_TERMS;-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <select id="selectTerms" resultMap="resultTbTerms">
+    <![CDATA[
+        SELECT *
+        FROM TB_TERMS
+        ORDER BY TT_SEQ
+        ]]>
+    </select>
+
+    <select id="selectTermsById" resultMap="resultTbTerms">
+    <![CDATA[
+        SELECT *
+        FROM TB_TERMS
+        WHERE TT_ID = #{termsId, jdbcType=INTEGER}
+        ORDER BY TT_SEQ
+        ]]>
+    </select>
+
+    <update id="updateTerms">
+        UPDATE TB_TERMS
+        SET TT_CONTENT = #{paramVO.content, jdbcType=VARCHAR}
+        WHERE TT_ID = #{paramVO.id, jdbcType=INTEGER}
+    </update>
+
+</mapper>
